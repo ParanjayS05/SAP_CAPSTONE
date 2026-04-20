@@ -1,0 +1,41 @@
+REPORT zpo_creation_sim.
+
+TYPES: BEGIN OF ty_po,
+         po_no       TYPE c LENGTH 6,
+         pr_no       TYPE c LENGTH 6,
+         vendor_id   TYPE c LENGTH 5,
+         material_id TYPE c LENGTH 6,
+         quantity    TYPE i,
+       END OF ty_po.
+
+DATA: lt_po TYPE STANDARD TABLE OF ty_po,
+      ls_po TYPE ty_po.
+
+START-OF-SELECTION.
+
+  CLEAR ls_po.
+  ls_po-po_no       = 'PO1001'.
+  ls_po-pr_no       = 'PR1001'.
+  ls_po-vendor_id   = 'V1001'.
+  ls_po-material_id = 'M10001'.
+  ls_po-quantity    = 10.
+  APPEND ls_po TO lt_po.
+
+  CLEAR ls_po.
+  ls_po-po_no       = 'PO1002'.
+  ls_po-pr_no       = 'PR1002'.
+  ls_po-vendor_id   = 'V1002'.
+  ls_po-material_id = 'M10002'.
+  ls_po-quantity    = 5.
+  APPEND ls_po TO lt_po.
+
+  WRITE: / 'PO No', 12 'PR No', 24 'Vendor', 36 'Material', 50 'Qty'.
+  ULINE.
+
+  LOOP AT lt_po INTO ls_po.
+    WRITE: / ls_po-po_no,
+             12 ls_po-pr_no,
+             24 ls_po-vendor_id,
+             36 ls_po-material_id,
+             50 ls_po-quantity.
+  ENDLOOP.
