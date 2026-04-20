@@ -1,0 +1,37 @@
+REPORT zpr_creation_sim.
+
+TYPES: BEGIN OF ty_pr,
+         pr_no       TYPE c LENGTH 6,
+         material_id TYPE c LENGTH 6,
+         quantity    TYPE i,
+         req_date    TYPE d,
+       END OF ty_pr.
+
+DATA: lt_pr TYPE STANDARD TABLE OF ty_pr,
+      ls_pr TYPE ty_pr.
+
+START-OF-SELECTION.
+
+  CLEAR ls_pr.
+  ls_pr-pr_no       = 'PR1001'.
+  ls_pr-material_id = 'M10001'.
+  ls_pr-quantity    = 10.
+  ls_pr-req_date    = sy-datum.
+  APPEND ls_pr TO lt_pr.
+
+  CLEAR ls_pr.
+  ls_pr-pr_no       = 'PR1002'.
+  ls_pr-material_id = 'M10002'.
+  ls_pr-quantity    = 5.
+  ls_pr-req_date    = sy-datum.
+  APPEND ls_pr TO lt_pr.
+
+  WRITE: / 'PR No', 15 'Material', 30 'Qty', 40 'Req Date'.
+  ULINE.
+
+  LOOP AT lt_pr INTO ls_pr.
+    WRITE: / ls_pr-pr_no,
+             15 ls_pr-material_id,
+             30 ls_pr-quantity,
+             40 ls_pr-req_date.
+  ENDLOOP.
