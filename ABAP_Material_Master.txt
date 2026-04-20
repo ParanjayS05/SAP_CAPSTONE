@@ -1,0 +1,33 @@
+REPORT zmaterial_master_sim.
+
+TYPES: BEGIN OF ty_material,
+         material_id   TYPE c LENGTH 6,
+         material_name TYPE c LENGTH 30,
+         unit          TYPE c LENGTH 5,
+       END OF ty_material.
+
+DATA: lt_material TYPE STANDARD TABLE OF ty_material,
+      ls_material TYPE ty_material.
+
+START-OF-SELECTION.
+
+  CLEAR ls_material.
+  ls_material-material_id   = 'M10001'.
+  ls_material-material_name = 'Laptop'.
+  ls_material-unit          = 'EA'.
+  APPEND ls_material TO lt_material.
+
+  CLEAR ls_material.
+  ls_material-material_id   = 'M10002'.
+  ls_material-material_name = 'Printer'.
+  ls_material-unit          = 'EA'.
+  APPEND ls_material TO lt_material.
+
+  WRITE: / 'Material', 15 'Material Name', 50 'Unit'.
+  ULINE.
+
+  LOOP AT lt_material INTO ls_material.
+    WRITE: / ls_material-material_id,
+             15 ls_material-material_name,
+             50 ls_material-unit.
+  ENDLOOP.
