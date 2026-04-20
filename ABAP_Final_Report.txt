@@ -1,0 +1,251 @@
+REPORT zp2p_tracking_report.
+
+************************************************************************
+* Type Definitions
+************************************************************************
+TYPES: BEGIN OF ty_vendor,
+         vendor_id   TYPE c LENGTH 5,
+         vendor_name TYPE c LENGTH 30,
+         city        TYPE c LENGTH 20,
+       END OF ty_vendor.
+
+TYPES: BEGIN OF ty_material,
+         material_id   TYPE c LENGTH 6,
+         material_name TYPE c LENGTH 30,
+         unit          TYPE c LENGTH 5,
+       END OF ty_material.
+
+TYPES: BEGIN OF ty_pr,
+         pr_no       TYPE c LENGTH 6,
+         material_id TYPE c LENGTH 6,
+         quantity    TYPE i,
+       END OF ty_pr.
+
+TYPES: BEGIN OF ty_po,
+         po_no       TYPE c LENGTH 6,
+         pr_no       TYPE c LENGTH 6,
+         vendor_id   TYPE c LENGTH 5,
+         material_id TYPE c LENGTH 6,
+         quantity    TYPE i,
+       END OF ty_po.
+
+TYPES: BEGIN OF ty_gr,
+         gr_no     TYPE c LENGTH 6,
+         po_no     TYPE c LENGTH 6,
+         gr_status TYPE c LENGTH 15,
+       END OF ty_gr.
+
+TYPES: BEGIN OF ty_invoice,
+         inv_no      TYPE c LENGTH 6,
+         po_no       TYPE c LENGTH 6,
+         invoice_amt TYPE p LENGTH 8 DECIMALS 2,
+         inv_status  TYPE c LENGTH 15,
+       END OF ty_invoice.
+
+TYPES: BEGIN OF ty_payment,
+         inv_no         TYPE c LENGTH 6,
+         payment_status TYPE c LENGTH 15,
+       END OF ty_payment.
+
+TYPES: BEGIN OF ty_final,
+         vendor_id      TYPE c LENGTH 5,
+         vendor_name    TYPE c LENGTH 30,
+         material_id    TYPE c LENGTH 6,
+         material_name  TYPE c LENGTH 30,
+         pr_no          TYPE c LENGTH 6,
+         po_no          TYPE c LENGTH 6,
+         gr_no          TYPE c LENGTH 6,
+         inv_no         TYPE c LENGTH 6,
+         payment_status TYPE c LENGTH 15,
+       END OF ty_final.
+
+************************************************************************
+* Data Declarations
+************************************************************************
+DATA: lt_vendor   TYPE STANDARD TABLE OF ty_vendor,
+      lt_material TYPE STANDARD TABLE OF ty_material,
+      lt_pr       TYPE STANDARD TABLE OF ty_pr,
+      lt_po       TYPE STANDARD TABLE OF ty_po,
+      lt_gr       TYPE STANDARD TABLE OF ty_gr,
+      lt_invoice  TYPE STANDARD TABLE OF ty_invoice,
+      lt_payment  TYPE STANDARD TABLE OF ty_payment,
+      lt_final    TYPE STANDARD TABLE OF ty_final.
+
+DATA: ls_vendor   TYPE ty_vendor,
+      ls_material TYPE ty_material,
+      ls_pr       TYPE ty_pr,
+      ls_po       TYPE ty_po,
+      ls_gr       TYPE ty_gr,
+      ls_invoice  TYPE ty_invoice,
+      ls_payment  TYPE ty_payment,
+      ls_final    TYPE ty_final.
+
+************************************************************************
+* Start of Selection
+************************************************************************
+START-OF-SELECTION.
+
+************************************************************************
+* Load Vendor Data
+************************************************************************
+  CLEAR ls_vendor.
+  ls_vendor-vendor_id   = 'V1001'.
+  ls_vendor-vendor_name = 'ABC Suppliers'.
+  ls_vendor-city        = 'Mumbai'.
+  APPEND ls_vendor TO lt_vendor.
+
+  CLEAR ls_vendor.
+  ls_vendor-vendor_id   = 'V1002'.
+  ls_vendor-vendor_name = 'Global Traders'.
+  ls_vendor-city        = 'Delhi'.
+  APPEND ls_vendor TO lt_vendor.
+
+************************************************************************
+* Load Material Data
+************************************************************************
+  CLEAR ls_material.
+  ls_material-material_id   = 'M10001'.
+  ls_material-material_name = 'Laptop'.
+  ls_material-unit          = 'EA'.
+  APPEND ls_material TO lt_material.
+
+  CLEAR ls_material.
+  ls_material-material_id   = 'M10002'.
+  ls_material-material_name = 'Printer'.
+  ls_material-unit          = 'EA'.
+  APPEND ls_material TO lt_material.
+
+************************************************************************
+* Load Purchase Requisition Data
+************************************************************************
+  CLEAR ls_pr.
+  ls_pr-pr_no       = 'PR1001'.
+  ls_pr-material_id = 'M10001'.
+  ls_pr-quantity    = 10.
+  APPEND ls_pr TO lt_pr.
+
+  CLEAR ls_pr.
+  ls_pr-pr_no       = 'PR1002'.
+  ls_pr-material_id = 'M10002'.
+  ls_pr-quantity    = 5.
+  APPEND ls_pr TO lt_pr.
+
+************************************************************************
+* Load Purchase Order Data
+************************************************************************
+  CLEAR ls_po.
+  ls_po-po_no       = 'PO1001'.
+  ls_po-pr_no       = 'PR1001'.
+  ls_po-vendor_id   = 'V1001'.
+  ls_po-material_id = 'M10001'.
+  ls_po-quantity    = 10.
+  APPEND ls_po TO lt_po.
+
+  CLEAR ls_po.
+  ls_po-po_no       = 'PO1002'.
+  ls_po-pr_no       = 'PR1002'.
+  ls_po-vendor_id   = 'V1002'.
+  ls_po-material_id = 'M10002'.
+  ls_po-quantity    = 5.
+  APPEND ls_po TO lt_po.
+
+************************************************************************
+* Load Goods Receipt Data
+************************************************************************
+  CLEAR ls_gr.
+  ls_gr-gr_no     = 'GR1001'.
+  ls_gr-po_no     = 'PO1001'.
+  ls_gr-gr_status = 'Received'.
+  APPEND ls_gr TO lt_gr.
+
+  CLEAR ls_gr.
+  ls_gr-gr_no     = 'GR1002'.
+  ls_gr-po_no     = 'PO1002'.
+  ls_gr-gr_status = 'Received'.
+  APPEND ls_gr TO lt_gr.
+
+************************************************************************
+* Load Invoice Data
+************************************************************************
+  CLEAR ls_invoice.
+  ls_invoice-inv_no      = 'IV1001'.
+  ls_invoice-po_no       = 'PO1001'.
+  ls_invoice-invoice_amt = '55000.00'.
+  ls_invoice-inv_status  = 'Verified'.
+  APPEND ls_invoice TO lt_invoice.
+
+  CLEAR ls_invoice.
+  ls_invoice-inv_no      = 'IV1002'.
+  ls_invoice-po_no       = 'PO1002'.
+  ls_invoice-invoice_amt = '12000.00'.
+  ls_invoice-inv_status  = 'Verified'.
+  APPEND ls_invoice TO lt_invoice.
+
+************************************************************************
+* Load Payment Data
+************************************************************************
+  CLEAR ls_payment.
+  ls_payment-inv_no         = 'IV1001'.
+  ls_payment-payment_status = 'Paid'.
+  APPEND ls_payment TO lt_payment.
+
+  CLEAR ls_payment.
+  ls_payment-inv_no         = 'IV1002'.
+  ls_payment-payment_status = 'Pending'.
+  APPEND ls_payment TO lt_payment.
+
+************************************************************************
+* Final Report Logic
+************************************************************************
+  LOOP AT lt_po INTO ls_po.
+    CLEAR ls_final.
+
+    ls_final-po_no       = ls_po-po_no.
+    ls_final-pr_no       = ls_po-pr_no.
+    ls_final-vendor_id   = ls_po-vendor_id.
+    ls_final-material_id = ls_po-material_id.
+
+    READ TABLE lt_vendor INTO ls_vendor WITH KEY vendor_id = ls_po-vendor_id.
+    IF sy-subrc = 0.
+      ls_final-vendor_name = ls_vendor-vendor_name.
+    ENDIF.
+
+    READ TABLE lt_material INTO ls_material WITH KEY material_id = ls_po-material_id.
+    IF sy-subrc = 0.
+      ls_final-material_name = ls_material-material_name.
+    ENDIF.
+
+    READ TABLE lt_gr INTO ls_gr WITH KEY po_no = ls_po-po_no.
+    IF sy-subrc = 0.
+      ls_final-gr_no = ls_gr-gr_no.
+    ENDIF.
+
+    READ TABLE lt_invoice INTO ls_invoice WITH KEY po_no = ls_po-po_no.
+    IF sy-subrc = 0.
+      ls_final-inv_no = ls_invoice-inv_no.
+    ENDIF.
+
+    READ TABLE lt_payment INTO ls_payment WITH KEY inv_no = ls_final-inv_no.
+    IF sy-subrc = 0.
+      ls_final-payment_status = ls_payment-payment_status.
+    ENDIF.
+
+    APPEND ls_final TO lt_final.
+  ENDLOOP.
+
+************************************************************************
+* Display Output
+************************************************************************
+  WRITE: / 'Vendor Name', 25 'Material', 45 'PR No', 58 'PO No',
+           70 'GR No', 82 'Invoice', 95 'Payment Status'.
+  ULINE.
+
+  LOOP AT lt_final INTO ls_final.
+    WRITE: / ls_final-vendor_name,
+             25 ls_final-material_name,
+             45 ls_final-pr_no,
+             58 ls_final-po_no,
+             70 ls_final-gr_no,
+             82 ls_final-inv_no,
+             95 ls_final-payment_status.
+  ENDLOOP.
