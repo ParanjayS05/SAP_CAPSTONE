@@ -1,0 +1,33 @@
+REPORT zpayment_status_sim.
+
+TYPES: BEGIN OF ty_payment,
+         payment_no     TYPE c LENGTH 6,
+         inv_no         TYPE c LENGTH 6,
+         payment_status TYPE c LENGTH 15,
+       END OF ty_payment.
+
+DATA: lt_payment TYPE STANDARD TABLE OF ty_payment,
+      ls_payment TYPE ty_payment.
+
+START-OF-SELECTION.
+
+  CLEAR ls_payment.
+  ls_payment-payment_no     = 'PY1001'.
+  ls_payment-inv_no         = 'IV1001'.
+  ls_payment-payment_status = 'Paid'.
+  APPEND ls_payment TO lt_payment.
+
+  CLEAR ls_payment.
+  ls_payment-payment_no     = 'PY1002'.
+  ls_payment-inv_no         = 'IV1002'.
+  ls_payment-payment_status = 'Pending'.
+  APPEND ls_payment TO lt_payment.
+
+  WRITE: / 'Payment', 15 'Invoice', 30 'Status'.
+  ULINE.
+
+  LOOP AT lt_payment INTO ls_payment.
+    WRITE: / ls_payment-payment_no,
+             15 ls_payment-inv_no,
+             30 ls_payment-payment_status.
+  ENDLOOP.
