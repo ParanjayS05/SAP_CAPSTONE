@@ -1,0 +1,34 @@
+Vendor Data
+-----------
+V1001  ABC Suppliers   Mumbai
+V1002  Global Traders  Delhi
+
+Material Data
+-------------
+M10001 Laptop   EA
+M10002 Printer  EA
+
+Purchase Requisition
+--------------------
+PR1001 M10001 10
+PR1002 M10002 5
+
+Purchase Order
+--------------
+PO1001 PR1001 V1001 M10001 10
+PO1002 PR1002 V1002 M10002 5
+
+Goods Receipt
+-------------
+GR1001 PO1001 Received
+GR1002 PO1002 Received
+
+Invoice Receipt
+---------------
+IV1001 PO1001 55000.00 Verified
+IV1002 PO1002 12000.00 Verified
+
+Payment Status
+--------------
+PY1001 IV1001 Paid
+PY1002 IV1002 Pending
