@@ -1,0 +1,33 @@
+REPORT zvendor_master_sim.
+
+TYPES: BEGIN OF ty_vendor,
+         vendor_id   TYPE c LENGTH 5,
+         vendor_name TYPE c LENGTH 30,
+         city        TYPE c LENGTH 20,
+       END OF ty_vendor.
+
+DATA: lt_vendor TYPE STANDARD TABLE OF ty_vendor,
+      ls_vendor TYPE ty_vendor.
+
+START-OF-SELECTION.
+
+  CLEAR ls_vendor.
+  ls_vendor-vendor_id   = 'V1001'.
+  ls_vendor-vendor_name = 'ABC Suppliers'.
+  ls_vendor-city        = 'Mumbai'.
+  APPEND ls_vendor TO lt_vendor.
+
+  CLEAR ls_vendor.
+  ls_vendor-vendor_id   = 'V1002'.
+  ls_vendor-vendor_name = 'Global Traders'.
+  ls_vendor-city        = 'Delhi'.
+  APPEND ls_vendor TO lt_vendor.
+
+  WRITE: / 'Vendor ID', 15 'Vendor Name', 50 'City'.
+  ULINE.
+
+  LOOP AT lt_vendor INTO ls_vendor.
+    WRITE: / ls_vendor-vendor_id,
+             15 ls_vendor-vendor_name,
+             50 ls_vendor-city.
+  ENDLOOP.
