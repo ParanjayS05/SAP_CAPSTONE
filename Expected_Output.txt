@@ -1,0 +1,4 @@
+Vendor Name               Material             PR No     PO No     GR No    Invoice   Payment Status
+----------------------------------------------------------------------------------------------------
+ABC Suppliers             Laptop               PR1001    PO1001    GR1001   IV1001    Paid
+Global Traders            Printer              PR1002    PO1002    GR1002   IV1002    Pending
