@@ -1,0 +1,37 @@
+REPORT zinvoice_receipt_sim.
+
+TYPES: BEGIN OF ty_invoice,
+         inv_no      TYPE c LENGTH 6,
+         po_no       TYPE c LENGTH 6,
+         invoice_amt TYPE p LENGTH 8 DECIMALS 2,
+         inv_status  TYPE c LENGTH 15,
+       END OF ty_invoice.
+
+DATA: lt_invoice TYPE STANDARD TABLE OF ty_invoice,
+      ls_invoice TYPE ty_invoice.
+
+START-OF-SELECTION.
+
+  CLEAR ls_invoice.
+  ls_invoice-inv_no      = 'IV1001'.
+  ls_invoice-po_no       = 'PO1001'.
+  ls_invoice-invoice_amt = '55000.00'.
+  ls_invoice-inv_status  = 'Verified'.
+  APPEND ls_invoice TO lt_invoice.
+
+  CLEAR ls_invoice.
+  ls_invoice-inv_no      = 'IV1002'.
+  ls_invoice-po_no       = 'PO1002'.
+  ls_invoice-invoice_amt = '12000.00'.
+  ls_invoice-inv_status  = 'Verified'.
+  APPEND ls_invoice TO lt_invoice.
+
+  WRITE: / 'Invoice', 12 'PO No', 24 'Amount', 40 'Status'.
+  ULINE.
+
+  LOOP AT lt_invoice INTO ls_invoice.
+    WRITE: / ls_invoice-inv_no,
+             12 ls_invoice-po_no,
+             24 ls_invoice-invoice_amt,
+             40 ls_invoice-inv_status.
+  ENDLOOP.
