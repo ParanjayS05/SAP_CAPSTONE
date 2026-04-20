@@ -1,0 +1,37 @@
+REPORT zgr_creation_sim.
+
+TYPES: BEGIN OF ty_gr,
+         gr_no     TYPE c LENGTH 6,
+         po_no     TYPE c LENGTH 6,
+         gr_date   TYPE d,
+         gr_status TYPE c LENGTH 15,
+       END OF ty_gr.
+
+DATA: lt_gr TYPE STANDARD TABLE OF ty_gr,
+      ls_gr TYPE ty_gr.
+
+START-OF-SELECTION.
+
+  CLEAR ls_gr.
+  ls_gr-gr_no     = 'GR1001'.
+  ls_gr-po_no     = 'PO1001'.
+  ls_gr-gr_date   = sy-datum.
+  ls_gr-gr_status = 'Received'.
+  APPEND ls_gr TO lt_gr.
+
+  CLEAR ls_gr.
+  ls_gr-gr_no     = 'GR1002'.
+  ls_gr-po_no     = 'PO1002'.
+  ls_gr-gr_date   = sy-datum.
+  ls_gr-gr_status = 'Received'.
+  APPEND ls_gr TO lt_gr.
+
+  WRITE: / 'GR No', 12 'PO No', 24 'GR Date', 40 'Status'.
+  ULINE.
+
+  LOOP AT lt_gr INTO ls_gr.
+    WRITE: / ls_gr-gr_no,
+             12 ls_gr-po_no,
+             24 ls_gr-gr_date,
+             40 ls_gr-gr_status.
+  ENDLOOP.
